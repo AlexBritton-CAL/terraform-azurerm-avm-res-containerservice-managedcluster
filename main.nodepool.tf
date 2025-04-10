@@ -1,6 +1,6 @@
 module "nodepools" {
   source     = "./modules/nodepool"
-  depends_on = [azapi_update_resource.aks_cluster_post_create]
+  # depends_on = [azapi_update_resource.aks_cluster_post_create]
   for_each   = var.node_pools
 
   cluster_resource_id = azurerm_kubernetes_cluster.this.id
