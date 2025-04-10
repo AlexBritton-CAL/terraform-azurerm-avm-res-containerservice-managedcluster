@@ -579,26 +579,26 @@ resource "terraform_data" "http_proxy_config_no_proxy_keeper" {
   }
 }
 
-resource "azapi_update_resource" "aks_cluster_http_proxy_config_no_proxy" {
-  count = try(var.http_proxy_config.no_proxy != null, false) ? 1 : 0
+# resource "azapi_update_resource" "aks_cluster_http_proxy_config_no_proxy" {
+#   count = try(var.http_proxy_config.no_proxy != null, false) ? 1 : 0
 
-  type = "Microsoft.ContainerService/managedClusters@2024-02-01"
-  body = {
-    properties = {
-      httpProxyConfig = {
-        noProxy = var.http_proxy_config.no_proxy
-      }
-    }
-  }
-  resource_id = azurerm_kubernetes_cluster.this.id
+#   type = "Microsoft.ContainerService/managedClusters@2024-02-01"
+#   body = {
+#     properties = {
+#       httpProxyConfig = {
+#         noProxy = var.http_proxy_config.no_proxy
+#       }
+#     }
+#   }
+#   resource_id = azurerm_kubernetes_cluster.this.id
 
-  depends_on = [azapi_update_resource.aks_cluster_post_create]
+#   depends_on = [azapi_update_resource.aks_cluster_post_create]
 
-  lifecycle {
-    ignore_changes       = all
-    replace_triggered_by = [terraform_data.http_proxy_config_no_proxy_keeper[0].id]
-  }
-}
+#   lifecycle {
+#     ignore_changes       = all
+#     replace_triggered_by = [terraform_data.http_proxy_config_no_proxy_keeper[0].id]
+#   }
+# }
 
 # required AVM resources interfaces
 resource "azurerm_management_lock" "this" {
