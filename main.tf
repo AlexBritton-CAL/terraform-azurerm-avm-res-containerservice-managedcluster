@@ -556,20 +556,20 @@ resource "terraform_data" "kubernetes_version_keeper" {
   }
 }
 
-resource "azapi_update_resource" "aks_cluster_post_create" {
-  type = "Microsoft.ContainerService/managedClusters@2024-02-01"
-  body = {
-    properties = {
-      kubernetesVersion = var.kubernetes_version
-    }
-  }
-  resource_id = azurerm_kubernetes_cluster.this.id
-
-  lifecycle {
-    ignore_changes       = all
-    replace_triggered_by = [terraform_data.kubernetes_version_keeper.id]
-  }
-}
+# resource "azapi_update_resource" "aks_cluster_post_create" {
+#   type = "Microsoft.ContainerService/managedClusters@2024-02-01"
+#   body = {
+#     properties = {
+#       kubernetesVersion = var.kubernetes_version
+#     }
+#   }
+#   resource_id = azurerm_kubernetes_cluster.this.id
+# 
+#   lifecycle {
+#     ignore_changes       = all
+#     replace_triggered_by = [terraform_data.kubernetes_version_keeper.id]
+#   }
+# }
 
 resource "terraform_data" "http_proxy_config_no_proxy_keeper" {
   count = try(var.http_proxy_config.no_proxy != null, false) ? 1 : 0
